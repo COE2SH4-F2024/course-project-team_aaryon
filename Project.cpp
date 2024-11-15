@@ -9,6 +9,7 @@ using namespace std;
 
 Player *myPlayer; // Global pointer meant to instatiate a player object on heap
 GameMechs *myGM;
+objPos* grid;
 
 
 void Initialize(void);
@@ -43,6 +44,17 @@ void Initialize(void)
 
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
+    int size=(myGM->getBoardSizeX())*2 + (myGM->getBoardSizeY())*2 - 4;
+    grid = new objPos[size];
+    int count=0;
+    for(int y=0; y<myGM->getBoardSizeY(); y++) {
+        for(int x=0; x<myGM->getBoardSizeX(); x++) {
+            if(x==0 || x==myGM->getBoardSizeX()-1 || y==0 || y==myGM->getBoardSizeY()-1) {
+                grid[count].setObjPos(x, y, '#');
+                count++;
+            }
+        }
+    }
 }
 
 void GetInput(void)
@@ -59,9 +71,18 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
-    objPos playerPos = myPlayer->getPlayerPos();
-
-    MacUILib_printf("Player(%c) coordinates (%d, %d)\n", playerPos.getSymbol(), playerPos.pos->x, playerPos.pos->y);
+    int count=0;
+    for(int y=0; y<myGM->getBoardSizeY(); y++) {
+        for(int x=0; x<myGM->getBoardSizeX(); x++) {
+            if(x==grid[count].pos->x && y==grid[count].pos->y) {
+                MacUILib_printf("%c ", grid[count].getSymbol());
+                count++;
+            } else {
+                MacUILib_printf("  ");
+            }
+        }
+        MacUILib_printf("\n");
+    }
 }
 
 void LoopDelay(void)
@@ -74,7 +95,9 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();
 
-    delete myPlayer;    
+    delete myPlayer;
+    delete myGM;
+    delete[] grid;    
 
     MacUILib_uninit();
 }
