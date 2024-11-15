@@ -2,6 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "Player.h"
+#include "string.h"
 
 using namespace std;
 
@@ -9,6 +10,8 @@ using namespace std;
 
 Player *myPlayer; // Global pointer meant to instatiate a player object on heap
 GameMechs *myGM;
+
+char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
 
 void Initialize(void);
 void GetInput(void);
@@ -62,12 +65,16 @@ void DrawScreen(void)
         for(int x=0; x<myGM->getBoardSizeX(); x++) {
             if(x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY()-1) {
                 MacUILib_printf("# ");
+            } else if(x == myPlayer->getPlayerPos().pos->x && y == myPlayer->getPlayerPos().pos->y) {
+                MacUILib_printf("%c ", myPlayer->getPlayerPos().getSymbol());
             } else {
                 MacUILib_printf("  ");
             }
         }
         MacUILib_printf("\n");
     }
+
+    MacUILib_printf("%s", dirList[myPlayer->getDir()]);
 }
 
 void LoopDelay(void)

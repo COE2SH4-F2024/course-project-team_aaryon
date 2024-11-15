@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
@@ -65,3 +64,6 @@ void Player::movePlayer()
 }
 
 // More methods to be added
+int Player::getDir() {
+    return myDir;
+}
