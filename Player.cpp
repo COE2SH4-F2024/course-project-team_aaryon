@@ -52,6 +52,9 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
+        case 32:
+            myDir = STOP;
+            break;
         case '.':
             mainGameMechsRef->setExitTrue();
             break;
