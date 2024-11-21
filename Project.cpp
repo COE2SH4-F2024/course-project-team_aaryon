@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "Player.h"
 #include "string.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 
 Player *myPlayer; // Global pointer meant to instatiate a player object on heap
 GameMechs *myGM;
+Food *snakeFood;
 
 char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
 
@@ -25,7 +27,7 @@ int main(void)
 
     Initialize();
 
-    while(myGM->getExitFlagStatus() == false)  
+    while(myGM->getExitFlagStatus() == false && myGM->getLoseFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -45,6 +47,7 @@ void Initialize(void)
 
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
+    snakeFood = new Food();
 }
 
 void GetInput(void)
@@ -62,8 +65,10 @@ void GetInput(void)
     if (userInput == '1'){
         myGM->incrementScore();
     }
-    else  if (userInput == '2'){
+    else if (userInput == '2'){
         myGM->setLoseFlag();
+    } else if (userInput == '3') {
+        snakeFood->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
     }
    
 }
@@ -72,7 +77,6 @@ void RunLogic(void)
 {
     myPlayer->movePlayer();
     myGM->clearInput();
-
 }
 
 void DrawScreen(void)
@@ -85,6 +89,8 @@ void DrawScreen(void)
                 MacUILib_printf("# ");
             } else if(x == myPlayer->getPlayerPos().pos->x && y == myPlayer->getPlayerPos().pos->y) {
                 MacUILib_printf("%c ", myPlayer->getPlayerPos().getSymbol());
+            } else if(x == snakeFood->getFoodPos().pos->x && y == snakeFood->getFoodPos().pos->y) {
+                MacUILib_printf("%c ", snakeFood->getFoodPos().getSymbol());
             } else {
                 MacUILib_printf("  ");
             }
@@ -111,6 +117,7 @@ void CleanUp(void)
 
     delete myPlayer;
     delete myGM;
+    delete snakeFood;
 
     MacUILib_uninit();
 }
