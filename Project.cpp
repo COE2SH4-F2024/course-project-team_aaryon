@@ -53,14 +53,13 @@ void Initialize(void)
 
 void GetInput(void)
 {
+    myGM->collectAsyncInput();
     char userInput = myGM->getInput(); 
 
     if (userInput != 0) { 
-        myGM->setInput(userInput); 
         myPlayer->updatePlayerDir(); 
     }
 
-    
     //debugging keys
 
     if (userInput == '1'){
