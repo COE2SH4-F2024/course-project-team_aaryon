@@ -49,12 +49,30 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   myPlayer->updatePlayerDir();
+    char userInput = myGM->getInput(); 
+
+    if (userInput != 0) { 
+        myGM->setInput(userInput); 
+        myPlayer->updatePlayerDir(); 
+    }
+
+    
+    //debugging keys
+
+    if (userInput == '1'){
+        myGM->incrementScore();
+    }
+    else  if (userInput == '2'){
+        myGM->setLoseFlag();
+    }
+   
 }
 
 void RunLogic(void)
 {
     myPlayer->movePlayer();
+    myGM->clearInput();
+
 }
 
 void DrawScreen(void)
@@ -74,7 +92,11 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("%s", dirList[myPlayer->getDir()]);
+    MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
+    MacUILib_printf("Score: %d\n", myGM->getScore());
+    if (myGM->getLoseFlagStatus() == true){
+        MacUILib_printf("You Lose :(");
+    }
 }
 
 void LoopDelay(void)
