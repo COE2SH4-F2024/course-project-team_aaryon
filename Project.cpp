@@ -103,6 +103,8 @@ void DrawScreen(void)
     MacUILib_printf("Score: %d\n", myGM->getScore());
     if (myGM->getLoseFlagStatus() == true){
         MacUILib_printf("You Lose :(");
+    } else if (myGM->getExitFlagStatus() == true) {
+        MacUILib_printf("You ended the game.");
     }
 }
 

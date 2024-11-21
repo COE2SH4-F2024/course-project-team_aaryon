@@ -27,7 +27,9 @@ objPos Player::getPlayerPos() const
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-    switch(mainGameMechsRef->getInput()) {
+    char input = mainGameMechsRef->getInput();
+    mainGameMechsRef->clearInput();
+    switch(input) {
         case 'W':
         case 'w':
             if(myDir != UP && myDir != DOWN) {
