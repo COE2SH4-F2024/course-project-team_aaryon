@@ -48,6 +48,7 @@ void Initialize(void)
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
     snakeFood = new Food();
+    snakeFood->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
 }
 
 void GetInput(void)
