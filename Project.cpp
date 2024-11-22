@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "string.h"
 #include "Food.h"
+#include <windows.h>
 
 using namespace std;
 
@@ -21,6 +22,17 @@ void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
+
+// Hides the Cursor
+void HideCursor() {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    if(GetConsoleCursorInfo(hConsole, &cursorInfo)) {
+        cursorInfo.bVisible = FALSE;
+        SetConsoleCursorInfo(hConsole, &cursorInfo);
+    }
+}
 
 int main(void)
 {
@@ -49,6 +61,8 @@ void Initialize(void)
     myPlayer = new Player(myGM);
     snakeFood = new Food();
     snakeFood->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
+
+    HideCursor();
 }
 
 void GetInput(void)
