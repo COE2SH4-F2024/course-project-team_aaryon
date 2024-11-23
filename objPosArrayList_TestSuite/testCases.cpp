@@ -414,8 +414,6 @@ void testRemoveTail_5Element()
 }
 
 
-
-
 //===========================================================
 	bool runAllTests(int argc, char const *argv[]) {
 		
