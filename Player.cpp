@@ -109,12 +109,24 @@ void Player::movePlayer()
     }
 
     playerPosList->insertHead(tempPos);
-    playerPosList->removeTail();
 
-    cout << playerPosList->getSize() << endl;
+    if(checkFoodConsumption()) {
+        mainGameMechsRef->incrementScore();
+        mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+    } else {
+        playerPosList->removeTail();
+    }
 }
 
 // More methods to be added
 int Player::getDir() {
     return myDir;
+}
+
+bool Player::checkFoodConsumption() {
+    if(playerPosList->getHeadElement().pos->x == mainGameMechsRef->getFood()->getFoodPos().pos->x && playerPosList->getHeadElement().pos->y == mainGameMechsRef->getFood()->getFoodPos().pos->y) {
+        return true;
+    }
+
+    return false;
 }

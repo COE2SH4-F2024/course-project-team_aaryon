@@ -12,7 +12,6 @@ using namespace std;
 
 Player *myPlayer; // Global pointer meant to instatiate a player object on heap
 GameMechs *myGM;
-Food *snakeFood;
 
 char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
 
@@ -57,19 +56,9 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs();
+    myGM = new GameMechs(30, 15);
     myPlayer = new Player(myGM);
-    snakeFood = new Food();
-    snakeFood->generateFood(myPlayer->getPlayerPos()->getHeadElement(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
-
-    objPos temp1Pos(14, 7, '@');
-    objPos temp2Pos(14, 7, '@');
-    objPos temp3Pos(14, 7, '@');
-    objPos temp4Pos(11, 7, '@');
-    myPlayer->getPlayerPos()->insertHead(temp1Pos);
-    myPlayer->getPlayerPos()->insertHead(temp2Pos);
-    myPlayer->getPlayerPos()->insertHead(temp3Pos);
-    myPlayer->getPlayerPos()->insertHead(temp4Pos);
+    myGM->getFood()->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
 
     HideCursor();
 }
@@ -91,7 +80,7 @@ void GetInput(void)
     else if (userInput == '2'){
         myGM->setLoseFlag();
     } else if (userInput == '3') {
-        snakeFood->generateFood(myPlayer->getPlayerPos()->getHeadElement(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
+        myGM->getFood()->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
     }
    
 }
@@ -127,8 +116,8 @@ void DrawScreen(void)
 
             if(x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY()-1) {
                 MacUILib_printf("# ");
-            } else if(x == snakeFood->getFoodPos().pos->x && y == snakeFood->getFoodPos().pos->y) {
-                MacUILib_printf("%c ", snakeFood->getFoodPos().getSymbol());
+            } else if(x == myGM->getFood()->getFoodPos().pos->x && y == myGM->getFood()->getFoodPos().pos->y) {
+                MacUILib_printf("%c ", myGM->getFood()->getFoodPos().getSymbol());
             } else {
                 MacUILib_printf("  ");
             }
@@ -138,6 +127,7 @@ void DrawScreen(void)
 
     MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
+    MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
         MacUILib_printf("You Lose :(");
     } else if (myGM->getExitFlagStatus() == true) {
@@ -157,7 +147,6 @@ void CleanUp(void)
 
     delete myPlayer;
     delete myGM;
-    delete snakeFood;
 
     MacUILib_uninit();
 }

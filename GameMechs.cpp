@@ -21,6 +21,8 @@ GameMechs::GameMechs(int boardX, int boardY)
 
     boardSizeX = boardX;
     boardSizeY = boardY;
+
+    snakeFood = new Food();
 }
 
 // do you need a destructor?
@@ -95,4 +97,8 @@ void GameMechs::collectAsyncInput() {
     if(input == '\e') {
         setExitTrue();
     }
+}
+
+Food* GameMechs::getFood() {
+    return snakeFood;
 }

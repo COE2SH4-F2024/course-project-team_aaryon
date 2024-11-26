@@ -25,6 +25,8 @@ class Player
         void updatePlayerDir();
         void movePlayer();
         int getDir();
+        bool checkFoodConsumption();
+        void increasePlayerLength();
 
         // More methods to be added here
 
