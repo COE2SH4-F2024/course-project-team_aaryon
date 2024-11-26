@@ -28,7 +28,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    
+    delete snakeFood;
 }
 
 bool GameMechs::getExitFlagStatus() const
