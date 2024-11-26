@@ -5,7 +5,7 @@
 Food::Food() {
     foodPos.pos->x = 10;
     foodPos.pos->y = 10;
-    foodPos.symbol = '^';
+    foodPos.symbol = 'o';
 }
 
 Food::~Food() {
