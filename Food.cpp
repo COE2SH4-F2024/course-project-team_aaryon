@@ -42,9 +42,11 @@ Food::Food(const Food &food) {
 }
 
 Food &Food::operator=(const Food &food) {
-    foodPos.pos->x = food.foodPos.pos->x;
-    foodPos.pos->y = food.foodPos.pos->y;
-    foodPos.symbol = food.foodPos.getSymbol();
+    if(this != nullptr) {
+        foodPos.pos->x = food.foodPos.pos->x;
+        foodPos.pos->y = food.foodPos.pos->y;
+        foodPos.symbol = food.foodPos.getSymbol();
+    }
 
     return *this;
 }

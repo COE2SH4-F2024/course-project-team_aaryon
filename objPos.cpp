@@ -30,11 +30,16 @@ objPos::objPos(const objPos &obj) {
 }
 
 objPos &objPos::operator=(const objPos &obj) {
-    delete pos;
-    pos = new Pos;
-    pos->x = obj.pos->x;
-    pos->y = obj.pos->y;
-    symbol = obj.getSymbol();
+    if(this != nullptr) {
+        if(pos != nullptr){
+            delete pos;
+        }
+        
+        pos = new Pos;
+        pos->x = obj.pos->x;
+        pos->y = obj.pos->y;
+        symbol = obj.getSymbol();
+    }
 
     return *this;
 }
