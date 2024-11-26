@@ -111,12 +111,18 @@ void Player::movePlayer()
     playerPosList->insertHead(tempPos);
 
     if(checkFoodConsumption()) {
-        mainGameMechsRef->incrementScore();
-        mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
-    } else {
-        playerPosList->removeTail();
+            mainGameMechsRef->incrementScore();
+            mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+        } else {
+            playerPosList->removeTail();
+        }
+    
+    if(checkSelfCollision()) {
+        mainGameMechsRef->setExitTrue();
+        mainGameMechsRef->setLoseFlag();
     }
 }
+ 
 
 // More methods to be added
 int Player::getDir() {
@@ -126,6 +132,17 @@ int Player::getDir() {
 bool Player::checkFoodConsumption() {
     if(playerPosList->getHeadElement().pos->x == mainGameMechsRef->getFood()->getFoodPos().pos->x && playerPosList->getHeadElement().pos->y == mainGameMechsRef->getFood()->getFoodPos().pos->y) {
         return true;
+    }
+
+    return false;
+}
+
+bool Player::checkSelfCollision() {
+    for (int i = 1; i < playerPosList->getSize(); i++)
+    {
+        if(playerPosList->getHeadElement().pos->x == playerPosList->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == playerPosList->getElement(i).pos->y) {
+        return true;
+        }
     }
 
     return false;
