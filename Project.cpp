@@ -62,6 +62,15 @@ void Initialize(void)
     snakeFood = new Food();
     snakeFood->generateFood(myPlayer->getPlayerPos()->getHeadElement(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
 
+    objPos temp1Pos(14, 7, '@');
+    objPos temp2Pos(14, 7, '@');
+    objPos temp3Pos(14, 7, '@');
+    objPos temp4Pos(11, 7, '@');
+    myPlayer->getPlayerPos()->insertHead(temp1Pos);
+    myPlayer->getPlayerPos()->insertHead(temp2Pos);
+    myPlayer->getPlayerPos()->insertHead(temp3Pos);
+    myPlayer->getPlayerPos()->insertHead(temp4Pos);
+
     HideCursor();
 }
 
@@ -96,15 +105,28 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-
-    objPos head = myPlayer->getPlayerPos()->getHeadElement();
+    bool drawSnakeBody;
 
     for(int y=0; y<myGM->getBoardSizeY(); y++) {
         for(int x=0; x<myGM->getBoardSizeX(); x++) {
+            drawSnakeBody = false;
+
+            for(int i=0; i<myPlayer->getPlayerPos()->getSize(); i++) {
+                objPos tempPos = myPlayer->getPlayerPos()->getElement(i);
+                if(tempPos.pos->x == x && tempPos.pos->y == y) {
+                    MacUILib_printf("%c ", tempPos.getSymbol());
+                    drawSnakeBody = true;
+                    break;
+                }
+            }
+
+            if(drawSnakeBody) {
+                continue;
+            }
+
+
             if(x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY()-1) {
                 MacUILib_printf("# ");
-            } else if(x == head.pos->x && y == head.pos->y) {
-                MacUILib_printf("%c ", head.getSymbol());
             } else if(x == snakeFood->getFoodPos().pos->x && y == snakeFood->getFoodPos().pos->y) {
                 MacUILib_printf("%c ", snakeFood->getFoodPos().getSymbol());
             } else {
