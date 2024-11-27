@@ -1,52 +1,49 @@
 #include "Food.h"
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
+using namespace std;
 
 Food::Food() {
-    foodPos.pos->x = 10;
-    foodPos.pos->y = 10;
-    foodPos.symbol = 'o';
+    foodBucket = new objPosArrayList();
+    for(int i=0; i<MAX_FOOD; i++) {
+        objPos foodPos(5, i+3, 'o');
+        foodBucket->insertHead(foodPos);
+    }
 }
 
 Food::~Food() {
-
+    delete foodBucket;
 }
 
 void Food::generateFood(objPosArrayList* blockOff, int xLim, int yLim) {
     srand(time(0));
-    int repeat, randX, randY;
-    do {
-        repeat = 0;
-        randX = (rand() % (xLim-3)) + 1; // Creates a random number from [1, xRange-2]
-        randY = (rand() % (yLim-3)) + 1; // Creates a random number from [1, yRange-2]
-        for(int i=0; i<blockOff->getSize(); i++) {
-            if(blockOff->getElement(i).pos->x == randX && blockOff->getElement(i).pos->y == randY) {
-                repeat = 1;
+    for(int i=0; i<MAX_FOOD; i++) {
+        int repeat, randX, randY;
+        do {
+            repeat = 0;
+            randX = (rand() % (xLim-3)) + 1; // Creates a random number from [1, xRange-2]
+            randY = (rand() % (yLim-3)) + 1; // Creates a random number from [1, yRange-2]
+            for(int j=0; j<blockOff->getSize(); j++) {
+                if(blockOff->getElement(j).pos->x == randX && blockOff->getElement(j).pos->y == randY) {
+                    repeat = 1;
+                }
             }
-        }
-        
-    } while(randX == foodPos.pos->x && randY == foodPos.pos->x || repeat);
 
-    foodPos.pos->x = randX;
-    foodPos.pos->y = randY;
-}
+            for(int k=0; k<foodBucket->getSize(); k++) {
+                if(randX == foodBucket->getElement(k).pos->x && randY == foodBucket->getElement(k).pos->y) {
+                    repeat = 1;
+                }
+            }
 
-objPos Food::getFoodPos() const {
-    return foodPos;
-}
+        } while(randX == foodBucket->getElement(i).pos->x && randY == foodBucket->getElement(i).pos->x || repeat);
 
-Food::Food(const Food &food) {
-    foodPos.pos->x = food.foodPos.pos->x;
-    foodPos.pos->y = food.foodPos.pos->y;
-    foodPos.symbol = food.foodPos.getSymbol();
-}
-
-Food &Food::operator=(const Food &food) {
-    if(this != nullptr) {
-        foodPos.pos->x = food.foodPos.pos->x;
-        foodPos.pos->y = food.foodPos.pos->y;
-        foodPos.symbol = food.foodPos.getSymbol();
+        objPos foodPos(randX, randY, 'o');
+        foodBucket->removeHead();
+        foodBucket->insertTail(foodPos);
     }
+}
 
-    return *this;
+objPosArrayList* Food::getFoodPos() const {
+    return foodBucket;
 }

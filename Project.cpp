@@ -94,11 +94,12 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    bool drawSnakeBody;
+    bool drawSnakeBody, drawFood;
 
     for(int y=0; y<myGM->getBoardSizeY(); y++) {
         for(int x=0; x<myGM->getBoardSizeX(); x++) {
             drawSnakeBody = false;
+            drawFood = false;
 
             for(int i=0; i<myPlayer->getPlayerPos()->getSize(); i++) {
                 objPos tempPos = myPlayer->getPlayerPos()->getElement(i);
@@ -113,11 +114,21 @@ void DrawScreen(void)
                 continue;
             }
 
+            for(int i=0; i<myGM->getFood()->getFoodPos()->getSize(); i++) {
+                if(x == myGM->getFood()->getFoodPos()->getElement(i).pos->x && y == myGM->getFood()->getFoodPos()->getElement(i).pos->y) {
+                    MacUILib_printf("%c ", myGM->getFood()->getFoodPos()->getElement(i).getSymbol());
+                    drawFood = true;
+                    break;
+                }
+            }
+
+            if(drawFood) {
+                continue;
+            }
+
 
             if(x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY()-1) {
                 MacUILib_printf("# ");
-            } else if(x == myGM->getFood()->getFoodPos().pos->x && y == myGM->getFood()->getFoodPos().pos->y) {
-                MacUILib_printf("%c ", myGM->getFood()->getFoodPos().getSymbol());
             } else {
                 MacUILib_printf("  ");
             }
@@ -128,6 +139,7 @@ void DrawScreen(void)
     MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
     MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
+    MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
         MacUILib_printf("You Lose :(");
     } else if (myGM->getExitFlagStatus() == true) {

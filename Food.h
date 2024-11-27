@@ -1,19 +1,19 @@
 #ifndef FOOD_H
 #define FOOD_H
 
+#define MAX_FOOD 5
+
 #include "objPosArrayList.h"
 
 class Food {
 private:
-    objPos foodPos;
+    objPosArrayList* foodBucket;
 public:
     Food();
     ~Food();
-    Food(const Food &food);
-    Food& operator=(const Food &food);
 
     void generateFood(objPosArrayList* blockOff, int xLim, int yLim); // Generates a new food item while keeping track of the player
-    objPos getFoodPos() const;
+    objPosArrayList* getFoodPos() const;
 };
 
 #endif
