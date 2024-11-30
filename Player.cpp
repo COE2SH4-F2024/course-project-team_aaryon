@@ -110,10 +110,23 @@ void Player::movePlayer()
 
     playerPosList->insertHead(tempPos);
 
-    if(checkFoodConsumption()) {
+    if(checkFoodConsumption() == 1) {
             mainGameMechsRef->incrementScore();
             mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
-        } else {
+        }
+    else if(checkFoodConsumption() == 2) {
+            mainGameMechsRef->incrementScore10();
+            mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+        }
+    else if(checkFoodConsumption() == 3) {
+            mainGameMechsRef->incrementScore50();
+            mainGameMechsRef->getFood()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+            for (int i = 0; i<9; i++) {
+                objPos tempTail = playerPosList->getTailElement();
+                playerPosList->insertTail(tempTail);
+            }
+        } 
+        else {
             playerPosList->removeTail();
         }
     
@@ -129,21 +142,29 @@ int Player::getDir() {
     return myDir;
 }
 
-bool Player::checkFoodConsumption() {
+int Player::checkFoodConsumption() {
     for(int i=0; i<mainGameMechsRef->getFood()->getFoodPos()->getSize(); i++) {
         if(playerPosList->getHeadElement().pos->x == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->y) {
-            return true;
+            if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'o') {
+                return 1;
+            }
+            else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'c') {
+                return 2;
+            }
+            else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == '0') {
+                return 3;
+            }
         }
     }
 
-    return false;
+    return 0;
 }
 
 bool Player::checkSelfCollision() {
     for (int i = 1; i < playerPosList->getSize(); i++)
     {
         if(playerPosList->getHeadElement().pos->x == playerPosList->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == playerPosList->getElement(i).pos->y) {
-        return true;
+            return true;
         }
     }
 

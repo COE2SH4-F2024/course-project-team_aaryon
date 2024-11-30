@@ -1,5 +1,8 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+#include <iostream>
+
+using namespace std;
 
 GameMechs::GameMechs()
 {
@@ -55,6 +58,16 @@ int GameMechs::getScore() const
 void GameMechs::incrementScore()
 {
     score++;
+}
+
+void GameMechs::incrementScore10()
+{
+    score+=10;
+}
+
+void GameMechs::incrementScore50()
+{
+    score+=50;
 }
 
 int GameMechs::getBoardSizeX() const

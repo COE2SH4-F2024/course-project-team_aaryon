@@ -7,8 +7,18 @@ using namespace std;
 Food::Food() {
     foodBucket = new objPosArrayList();
     for(int i=0; i<MAX_FOOD; i++) {
-        objPos foodPos(5, i+3, 'o');
-        foodBucket->insertHead(foodPos);
+        if (i == 0){
+            objPos foodPos(5, i+3, 'c');
+            foodBucket->insertHead(foodPos);
+        }
+        else if (i == (MAX_FOOD-1)){
+            objPos foodPos(5, i+3, '0');
+            foodBucket->insertHead(foodPos);
+        }
+        else{
+            objPos foodPos(5, i+3, 'o');
+            foodBucket->insertHead(foodPos);
+        }
     }
 }
 
@@ -36,14 +46,27 @@ void Food::generateFood(objPosArrayList* blockOff, int xLim, int yLim) {
                 }
             }
 
-        } while(randX == foodBucket->getElement(i).pos->x && randY == foodBucket->getElement(i).pos->x || repeat);
+        } while(randX == foodBucket->getElement(i).pos->x && randY == foodBucket->getElement(i).pos->y || repeat);
 
-        objPos foodPos(randX, randY, 'o');
-        foodBucket->removeHead();
-        foodBucket->insertTail(foodPos);
+        if (i == 0){
+            objPos foodPos(randX, randY, 'c');
+            foodBucket->removeHead();
+            foodBucket->insertTail(foodPos);
+        }
+        else if (i == (MAX_FOOD-1)){
+            objPos foodPos(randX, randY, '0');
+            foodBucket->removeHead();
+            foodBucket->insertTail(foodPos);
+        }
+        else{
+            objPos foodPos(randX, randY, 'o');
+            foodBucket->removeHead();
+            foodBucket->insertTail(foodPos);
+        }
     }
 }
 
 objPosArrayList* Food::getFoodPos() const {
     return foodBucket;
 }
+
