@@ -14,6 +14,13 @@ objPosArrayList::objPosArrayList()
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
+objPosArrayList::objPosArrayList(int size)
+{
+    listSize = 0;
+    arrayCapacity = size;
+    aList = new objPos[ARRAY_MAX_CAP];
+}
+
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;

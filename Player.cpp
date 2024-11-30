@@ -131,8 +131,10 @@ int Player::getDir() {
 
 bool Player::checkFoodConsumption() {
     for(int i=0; i<mainGameMechsRef->getFood()->getFoodPos()->getSize(); i++) {
-        if(playerPosList->getHeadElement().pos->x == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->y) {
-            return true;
+        for(int j=0; j<playerPosList->getSize(); j++) {
+            if(playerPosList->getElement(j).pos->x == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->x && playerPosList->getElement(j).pos->y == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->y) {
+                return true;
+            }
         }
     }
 
