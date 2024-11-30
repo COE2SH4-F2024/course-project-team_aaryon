@@ -10,7 +10,7 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-Player *myPlayer; // Global pointer meant to instatiate a player object on heap
+Player *myPlayer;
 GameMechs *myGM;
 
 char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
@@ -74,14 +74,14 @@ void GetInput(void)
 
     //debugging keys
 
-    if (userInput == '1'){
-        myGM->incrementScore();
-    }
-    else if (userInput == '2'){
-        myGM->setLoseFlag();
-    } else if (userInput == '3') {
-        myGM->getFood()->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
-    }
+    // if (userInput == '1'){
+    //     myGM->incrementScore();
+    // }
+    // else if (userInput == '2'){
+    //     myGM->setLoseFlag();
+    // } else if (userInput == '3') {
+    //     myGM->getFood()->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());
+    // }
    
 }
 
@@ -136,10 +136,19 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
+    MacUILib_printf("\n==============================================\n");
+
+    MacUILib_printf("Welcome to the snake game !!!\n");
+    MacUILib_printf("Please use the WASD characters to move, '.' to end the game and click SPACE to pause.\n");
+    MacUILib_printf("Collect as many apples as you can as well as some SPECIAL ones for some power ups\n");
+    MacUILib_printf("Have fun and remember, don't run into yourself\n");
+
+    MacUILib_printf("==============================================\n");
+
+    //MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
-    MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
+    //MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
+    //MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
         MacUILib_printf("You Lose :(");
     } else if (myGM->getExitFlagStatus() == true) {
