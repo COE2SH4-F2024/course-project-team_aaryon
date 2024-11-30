@@ -54,6 +54,7 @@ void Food::generateFood(objPosArrayList* blockOff, int xLim, int yLim) {
 
         } while(randX == foodBucket->getElement(i).pos->x && randY == foodBucket->getElement(i).pos->y || repeat);
 
+        // Depending on the loop iteration, add either a normal food object or one of the special ones
         if (i == 0){
             objPos foodPos(randX, randY, 'c');
             foodBucket->removeHead();

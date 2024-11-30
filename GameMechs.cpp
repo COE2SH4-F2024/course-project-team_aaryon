@@ -69,11 +69,13 @@ void GameMechs::incrementScore()
     score++;
 }
 
+// Increments score by 10
 void GameMechs::incrementScore10()
 {
     score+=10;
 }
 
+// Increments score by 50
 void GameMechs::incrementScore50()
 {
     score+=50;

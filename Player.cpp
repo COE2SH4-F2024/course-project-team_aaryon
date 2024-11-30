@@ -36,7 +36,7 @@ objPosArrayList* Player::getPlayerPos() const
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic
+    // Gets input from the player and proccesses the movement accordingly
     char input = mainGameMechsRef->getInput();
     mainGameMechsRef->clearInput();
     switch(input) {
@@ -64,10 +64,10 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
-        case 32:
+        case 32: // Spacebar stops the snake from moving
             myDir = STOP;
             break;
-        case '.':
+        case '.': // Ends the game
             mainGameMechsRef->setExitTrue();
             break;
     }
@@ -75,6 +75,7 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
+    // Get the head element of the snake
     objPos tempPos = playerPosList->getHeadElement();
 
     switch (myDir)
@@ -96,6 +97,7 @@ void Player::movePlayer()
             break;
     }
 
+    // Border wraparound logic
     if(tempPos.pos->x <= 0) {
         tempPos.pos->x = mainGameMechsRef->getBoardSizeX()-2;
     } else if(tempPos.pos->x >= mainGameMechsRef->getBoardSizeX()-1) {
@@ -108,6 +110,7 @@ void Player::movePlayer()
         tempPos.pos->y = 1;
     }
 
+    // Insert the new snake head with the updated position
     playerPosList->insertHead(tempPos);
 
     if(checkFoodConsumption() == 1) {

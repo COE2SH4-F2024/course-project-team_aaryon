@@ -13,6 +13,7 @@ using namespace std;
 Player *myPlayer;
 GameMechs *myGM;
 
+// Used to print the state string for debugging
 char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
 
 void Initialize(void);
@@ -96,11 +97,13 @@ void DrawScreen(void)
     MacUILib_clearScreen();
     bool drawSnakeBody, drawFood;
 
+    // Loop to print the game board
     for(int y=0; y<myGM->getBoardSizeY(); y++) {
         for(int x=0; x<myGM->getBoardSizeX(); x++) {
             drawSnakeBody = false;
             drawFood = false;
 
+            // Print out the snake body
             for(int i=0; i<myPlayer->getPlayerPos()->getSize(); i++) {
                 objPos tempPos = myPlayer->getPlayerPos()->getElement(i);
                 if(tempPos.pos->x == x && tempPos.pos->y == y) {
@@ -110,10 +113,12 @@ void DrawScreen(void)
                 }
             }
 
+            // Once a body gets printed move on to the next coordinate
             if(drawSnakeBody) {
                 continue;
             }
 
+            // Loop to print out all the foods
             for(int i=0; i<myGM->getFood()->getFoodPos()->getSize(); i++) {
                 if(x == myGM->getFood()->getFoodPos()->getElement(i).pos->x && y == myGM->getFood()->getFoodPos()->getElement(i).pos->y) {
                     MacUILib_printf("%c ", myGM->getFood()->getFoodPos()->getElement(i).getSymbol());
@@ -122,15 +127,17 @@ void DrawScreen(void)
                 }
             }
 
+            // Once a food item gets printed move on to the next coordinate
             if(drawFood) {
                 continue;
             }
 
 
+            // Prints the border
             if(x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY()-1) {
                 MacUILib_printf("# ");
             } else {
-                MacUILib_printf("  ");
+                MacUILib_printf("  "); // Otherwise print an empty space
             }
         }
         MacUILib_printf("\n");
@@ -152,9 +159,9 @@ void DrawScreen(void)
     //MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
     //MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
-        MacUILib_printf("You Lose :(");
+        MacUILib_printf("You Lose :("); // Lose message
     } else if (myGM->getExitFlagStatus() == true) {
-        MacUILib_printf("You ended the game.");
+        MacUILib_printf("You ended the game."); // Quitting game early message
     }
 }
 
