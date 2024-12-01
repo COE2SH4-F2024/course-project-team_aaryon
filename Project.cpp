@@ -158,7 +158,7 @@ void DrawScreen(void)
 
     //MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    if(myPlayer->getDir() == myPlayer->STOP) {
+    if(myPlayer->getDir() == myPlayer->STOP && myGM->getExitFlagStatus() == false) {
         MacUILib_printf("The game is paused. Click WASD to resume !!\n");
     }
     //MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
