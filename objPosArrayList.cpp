@@ -14,6 +14,7 @@ objPosArrayList::objPosArrayList()
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
+//Special constructor to specify the container size of the array list
 objPosArrayList::objPosArrayList(int size)
 {
     listSize = 0;
@@ -21,11 +22,13 @@ objPosArrayList::objPosArrayList(int size)
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
+//destructs the created objPos list on the heap
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;
 }
 
+//returns the number of objects
 int objPosArrayList::getSize() const
 {
     return listSize;
@@ -45,6 +48,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         aList[i] = aList[i-1]; 
     }
 
+    //set the new head at the provided object position and increase the size of the snake
     aList[0] = thisPos;
     listSize++; 
 
@@ -73,27 +77,32 @@ void objPosArrayList::removeHead()
     for(int i = 0; i<listSize-1; i++){
         aList[i] = aList[i+1];
     }
+    //decrease the size of the snake
     listSize--;
 }
 
 void objPosArrayList::removeTail()
-{
+{   
     if (listSize == 0){
         return;
     }
+    //no need to perform any shifts as the tail is the last element in the list
     listSize--;
 }
 
+//Get the objPos of the head of the snake
 objPos objPosArrayList::getHeadElement() const
 {
     return aList[0];
 }
 
+//Get the objPos of the tail of the snake
 objPos objPosArrayList::getTailElement() const
 {
     return aList[listSize-1];
 }
 
+//Get the objPos of a snake portion at a specified index in the list.
 objPos objPosArrayList::getElement(int index) const
 {
     //error troubleshooting to ensure the index chosen is not out of bounds of our list

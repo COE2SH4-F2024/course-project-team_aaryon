@@ -10,14 +10,17 @@ Food::Food() {
     // Creates 5 filler food items
     for(int i=0; i<MAX_FOOD; i++) {
         if (i == 0){
+            //This object insantiates once initially as the 10 point special object.
             objPos foodPos(5, i+3, 'c');
             foodBucket->insertHead(foodPos);
         }
         else if (i == (MAX_FOOD-1)){
+            //This is the 50 point special object that increases length by 10.
             objPos foodPos(5, i+3, '0');
             foodBucket->insertHead(foodPos);
         }
         else{
+            //This is the normal food object.
             objPos foodPos(5, i+3, 'o');
             foodBucket->insertHead(foodPos);
         }
