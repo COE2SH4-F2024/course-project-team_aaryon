@@ -88,7 +88,9 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    myPlayer->movePlayer();
+    if(myPlayer->getDir() != myPlayer->STOP) {
+        myPlayer->movePlayer();
+    }
     myGM->clearInput();
 }
 
@@ -147,8 +149,8 @@ void DrawScreen(void)
 
     MacUILib_printf("Welcome to the snake game !!!\n");
     MacUILib_printf("Please use the WASD characters to move, '.' to end the game and click SPACE to pause.\n");
-    MacUILib_printf("Collect '0' food items to gain 50 points but increase your snake length by 10.");
-    MacUILib_printf("Collet 'c' food items to gain 10 points.");
+    MacUILib_printf("Collect '0' food items to gain 50 points but increase your snake length by 10.\n");
+    MacUILib_printf("Collect 'c' food items to gain 10 points.\n");
     MacUILib_printf("Collect as many apples as you can as well as some SPECIAL ones for some power ups.\n");
     MacUILib_printf("Have fun and remember, don't run into yourself.\n");
 
@@ -156,6 +158,9 @@ void DrawScreen(void)
 
     //MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
+    if(myPlayer->getDir() == myPlayer->STOP) {
+        MacUILib_printf("The game is paused. Click WASD to resume !!\n");
+    }
     //MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
     //MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
