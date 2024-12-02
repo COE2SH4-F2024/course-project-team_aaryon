@@ -158,15 +158,15 @@ void DrawScreen(void)
 
     //MacUILib_printf("%s\n", dirList[myPlayer->getDir()]);
     MacUILib_printf("Score: %d\n", myGM->getScore());
+    MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
     if(myPlayer->getDir() == myPlayer->STOP && myGM->getExitFlagStatus() == false) {
-        MacUILib_printf("The game is paused. Click WASD to resume !!\n");
+        MacUILib_printf("\nThe game is paused. Click WASD to resume !!\n");
     }
-    //MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
     //MacUILib_printf("Food: %d\n", myGM->getFood()->getFoodPos()->getSize());
     if (myGM->getLoseFlagStatus() == true){
-        MacUILib_printf("You Lose :("); // Lose message
+        MacUILib_printf("\nYou Lose :("); // Lose message
     } else if (myGM->getExitFlagStatus() == true) {
-        MacUILib_printf("You ended the game."); // Quitting game early message
+        MacUILib_printf("\nYou ended the game."); // Quitting game early message
     }
 }
 

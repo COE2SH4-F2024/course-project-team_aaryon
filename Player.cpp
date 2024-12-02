@@ -9,7 +9,7 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList = new objPosArrayList();
 
-    objPos headPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '@');
+    objPos headPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '^');
 
     playerPosList->insertHead(headPos);
 
@@ -111,6 +111,28 @@ void Player::movePlayer()
     }
 
     // Insert the new snake head with the updated position
+    switch (myDir)
+    {
+    case DOWN:
+        tempPos.symbol = 'v';
+        break;
+    case UP:
+        tempPos.symbol = '^';
+        break;
+    case LEFT:
+        tempPos.symbol = '<';
+        break;
+    case RIGHT:
+        tempPos.symbol = '>';
+        break;
+    default:
+        break;
+    }
+    
+    objPos temp = playerPosList->getHeadElement();
+    temp.symbol = '@';
+    playerPosList->removeHead();
+    playerPosList->insertHead(temp);
     playerPosList->insertHead(tempPos);
 
     if(checkFoodConsumption() == 1) {
