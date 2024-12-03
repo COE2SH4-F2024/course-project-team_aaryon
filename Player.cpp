@@ -42,30 +42,46 @@ void Player::updatePlayerDir()
     switch(input) {
         case 'W':
         case 'w':
-            if(myDir != UP && myDir != DOWN) {
+            if(myDir != UP && myDir != DOWN && myDir != STOPD) {
                 myDir = UP;
             }
             break;
         case 'S':
         case 's':
-            if(myDir != UP && myDir != DOWN) {
+            if(myDir != UP && myDir != DOWN && myDir != STOPU) {
                 myDir = DOWN;
             }
             break;
         case 'A':
         case 'a':
-            if(myDir != LEFT && myDir != RIGHT) {
+            if(myDir != LEFT && myDir != RIGHT && myDir != STOPR) {
                 myDir = LEFT;
             }
             break;
         case 'D':
         case 'd':
-            if(myDir != LEFT && myDir != RIGHT) {
+            if(myDir != LEFT && myDir != RIGHT && myDir != STOPL) {
                 myDir = RIGHT;
             }
             break;
         case 32: // Spacebar stops the snake from moving
-            myDir = STOP;
+            switch (myDir)
+            {
+            case DOWN:
+                myDir = STOPD;
+                break;
+            case UP:
+                myDir = STOPU;
+                break;
+            case LEFT:
+                myDir = STOPL;
+                break;
+            case RIGHT:
+                myDir = STOPR;
+                break;
+            default:
+                break;
+            }
             break;
         case '.': // Ends the game
             mainGameMechsRef->setExitTrue();

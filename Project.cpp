@@ -88,7 +88,7 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    if(myPlayer->getDir() != myPlayer->STOP) {
+    if(myPlayer->getDir() < myPlayer->STOP) {
         myPlayer->movePlayer();
     }
     myGM->clearInput();
