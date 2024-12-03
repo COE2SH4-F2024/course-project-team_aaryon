@@ -170,18 +170,20 @@ int Player::getDir() {
 //this method allows us to define the conditions on which a snake has consumed food on the board.
 int Player::checkFoodConsumption() {
     for(int i=0; i<mainGameMechsRef->getFood()->getFoodPos()->getSize(); i++) {
-        //if the head of the snake is at an equivalent position to a food object.
-        if(playerPosList->getHeadElement().pos->x == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->y) {
-            //What type of food object are we colliding with? We change our return values depending on this, as it will allow us to adjust our
-            //score increments and other snake properties inside movePlayer().
-            if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'o') {
-                return 1;
-            }
-            else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'c') {
-                return 2;
-            }
-            else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == '0') {
-                return 3;
+        for(int j=0; j<playerPosList->getSize(); j++) {
+            //if the head of the snake is at an equivalent position to a food object.
+            if(playerPosList->getElement(j).pos->x == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->x && playerPosList->getElement(j).pos->y == mainGameMechsRef->getFood()->getFoodPos()->getElement(i).pos->y) {
+                //What type of food object are we colliding with? We change our return values depending on this, as it will allow us to adjust our
+                //score increments and other snake properties inside movePlayer().
+                if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'o') {
+                    return 1;
+                }
+                else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == 'c') {
+                    return 2;
+                }
+                else if (mainGameMechsRef->getFood()->getFoodPos()->getElement(i).getSymbol() == '0') {
+                    return 3;
+                }
             }
         }
     }
